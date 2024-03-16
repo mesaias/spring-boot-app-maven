@@ -1,5 +1,5 @@
 pipeline {
-  agent { kubernetes { inheritFrom 'dockeer' } }
+  agent { kubernetes { inheritFrom 'doccker' } }
 
   stages {
     stage('Checkout') {
