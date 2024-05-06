@@ -16,7 +16,7 @@ pipeline {
           // build the project and create a JAR file
           sh 'mvn clean package'
           sh "ls"
-          stash name: 'jar', includes: 'target/*.jar'
+          stash name: 'jar', includes: 'target/spring-boot-web.jar'
         }
       }
     }
@@ -34,7 +34,7 @@ pipeline {
       
       steps {
         container('docker-in-docker') {
-           unstash 'jar'
+          unstash 'jar'
           //args '-v /var/run/docker.sock:/var/run/docker.sock'
           sh "ls"
           sh "docker build . -t 10.152.183.114:5000/spring-boot-app-maven:1.1"
