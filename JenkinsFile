@@ -32,7 +32,7 @@ pipeline {
       
       steps {
         container('docker-in-docker') {
-          sh "ls -l /var/run/docker.sock"
+          //sh "ls -l /var/run/docker.sock"
           sh "docker ps"
           sh "docker build . -t 10.152.183.114:5000/spring-boot-app-maven:1.0"
           sh "docker push 10.152.183.114:5000/spring-boot-app-maven:1.0"
