@@ -37,7 +37,7 @@ pipeline {
       
       steps {
         container('docker-in-docker') {
-          
+          sh "whoami"
           sh "ls -l /home/jenkins/agent/workspace/spring-boot-app-maven/target/spring-boot-web.jar"
           unstash 'jar'
           //args '-v /var/run/docker.sock:/var/run/docker.sock'
