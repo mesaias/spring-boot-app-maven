@@ -18,6 +18,7 @@ pipeline {
           sh "ls target/"
           sh "pwd"
           stash name: 'jar', includes: 'target/spring-boot-web.jar'
+          sh "ls -l /home/jenkins/agent/workspace/spring-boot-app-maven/target/spring-boot-web.jar"
         }
       }
     }
