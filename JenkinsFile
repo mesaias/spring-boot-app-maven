@@ -20,7 +20,6 @@ pipeline {
           stash name: 'target', includes: 'target/'
           sh "ls -l /home/jenkins/agent/workspace/spring-boot-app-maven/target/spring-boot-web.jar"
           sh "whoami"
-          unstash 'jar'
         }
       }
     }
