@@ -17,10 +17,8 @@ pipeline {
           sh 'mvn clean package'
           sh "ls target/"
           sh "pwd"
-          sh "mv target/spring-boot-web.jar /home/jenkins/agent/workspace/"
-          sh "ls /home/jenkins/agent/workspace/"
-          stash name: 'jar', includes: '/home/jenkins/agent/workspace/spring-boot-web.jar'
-          sh "ls -l /home/jenkins/agent/workspace/spring-boot-web.jar"
+          stash name: 'target', includes: 'target/'
+          sh "ls -l /home/jenkins/agent/workspace/spring-boot-app-maven/target/spring-boot-web.jar"
           sh "whoami"
           unstash 'jar'
         }
@@ -41,8 +39,8 @@ pipeline {
       steps {
         container('docker-in-docker') {
           sh "whoami"
-          sh "ls -l /home/jenkins/agent/workspace/spring-boot-web.jar"
-          unstash 'jar'
+          sh "ls -l /home/jenkins/agent/workspace/spring-boot-app-maven/target/spring-boot-web.jar"
+          unstash 'target'
           //args '-v /var/run/docker.sock:/var/run/docker.sock'
           sh "ls"
           sh "docker build . -t 10.152.183.114:5000/spring-boot-app-maven:1.1"
