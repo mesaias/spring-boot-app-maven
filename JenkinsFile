@@ -17,12 +17,17 @@ pipeline {
           sh 'mvn clean package'
           sh "ls target/"
           sh "pwd"
-          stash name: 'target', includes: 'target/'
-          sh "ls -l /home/jenkins/agent/workspace/spring-boot-app-maven/target/spring-boot-web.jar"
+          sh 'mv target/spring-boot-web.jar /tmp/'
+          stash name: 'jar', includes: '/tmp/spring-boot-web.jar'
           sh "whoami"
         }
       }
     }
+  }
+}
+pipeline {
+
+  agent { kubernetes { inheritFrom 'spring' } }
     /*stage('Static Code Analysis') {
       environment {
         SONAR_URL = "http://34.201.116.83:9000"
@@ -33,6 +38,7 @@ pipeline {
         }
       }
     }*/
+  stages {
     stage('Build and Push Docker Image') {
       
       steps {
