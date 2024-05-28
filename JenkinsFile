@@ -18,7 +18,7 @@ pipeline {
           sh "ls target/"
           sh "pwd"
           sh "cd target && mv spring-boot-web.jar ../../../"
-          stash name: 'jar', includes: '../spring-boot-web.jar'
+          stash name: 'jar', includes: '/home/jenkins/agent/workspace/spring-boot-web.jar'
           sh "ls -l /home/jenkins/agent/workspace/spring-boot-web.jar"
           sh "whoami"
           unstash 'jar'
