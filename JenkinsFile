@@ -11,24 +11,16 @@ pipeline {
     }
     stage('Build and Test') {
       steps {
-          container('maven') {
+          container('docker-in-docker-maven') {
           sh 'ls -ltr'
           // build the project and create a JAR file
           sh 'mvn clean package'
-          sh "ls target/"
-          sh "pwd"
-          sh 'mv target/spring-boot-web.jar /tmp/'
-          sleep(time: 5, unit: 'SECONDS')
-          stash name: 'jar', includes: '/tmp/spring-boot-web.jar'
-          sh "whoami"
+          sh "docker build . -t 10.152.183.114:5000/spring-boot-app-maven:1.1"
+          sh "docker push 10.152.183.114:5000/spring-boot-app-maven:1.1"
         }
       }
     }
-  }
-}
-pipeline {
 
-  agent { kubernetes { inheritFrom 'spring' } }
     /*stage('Static Code Analysis') {
       environment {
         SONAR_URL = "http://34.201.116.83:9000"
@@ -39,7 +31,6 @@ pipeline {
         }
       }
     }*/
-  stages {
     stage('Build and Push Docker Image') {
       
       steps {
@@ -55,7 +46,7 @@ pipeline {
             
       }
     }
-    stage('Update Deployment File') {
+    /*stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
             GIT_USER_NAME = "iam-veeramalla"
@@ -73,6 +64,6 @@ pipeline {
                 '''
             }
         }
-    }
+    }*/
   }
 }
