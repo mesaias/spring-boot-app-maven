@@ -15,7 +15,9 @@ pipeline {
     }
       steps {
           container('docker-in-docker-maven') {
-          sh 'ls -ltr'
+          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: env.DOCKERHUB_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
+                        sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+          }
           // build the project and create a JAR file
           sh '''
           mvn clean package
