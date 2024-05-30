@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: mesaias/spring-boot-app-maven:97
+        image: mesaias/spring-boot-app-maven:102
         ports:
         - containerPort: 8080
