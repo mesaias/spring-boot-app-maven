@@ -10,12 +10,9 @@ pipeline {
       }
     }
     stage('Build and Test') {
-      environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Provide the ID of your Docker Hub credentials stored in Jenkins
-    }
       steps {
           container('docker-in-docker-maven') {
-          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: env.DOCKERHUB_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
+          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
                         sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
           }
           // build the project and create a JAR file
