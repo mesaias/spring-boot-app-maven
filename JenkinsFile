@@ -15,9 +15,9 @@ pipeline {
           sh 'ls -ltr'
           // build the project and create a JAR file
           sh '''
+          mvn clean package
           docker build . -t mesaias/spring-boot-app-maven:${BUILD_NUMBER}
           docker push mesaias/spring-boot-app-maven:${BUILD_NUMBER}
-          mvn clean package
           '''
           //docker build . -t 10.152.183.114:5000/spring-boot-app-maven:${BUILD_NUMBER}
           //docker push 10.152.183.114:5000/spring-boot-app-maven:${BUILD_NUMBER}
