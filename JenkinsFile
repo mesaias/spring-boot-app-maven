@@ -46,7 +46,7 @@ pipeline {
                     git config user.name "Isaias Solorio"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifests/deployment-to-replace.yaml
-                    cat manifests/deployment-to-replace.yaml >> manifests/deployment.yaml
+                    cat manifests/deployment-to-replace.yaml > manifests/deployment.yaml
                     git add manifests/deployment.yaml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
@@ -57,7 +57,8 @@ pipeline {
     stage('Update deployment') {
       steps {
         container('helm-kubectl') {
-          sh "kubectl apply -f manifests --recursive"
+          sh "kubectl apply -f manifests/deployment.yaml"
+          sh "kubectl apply -f manifests/service.yaml"
         }
       }
     }
