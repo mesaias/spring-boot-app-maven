@@ -10,6 +10,9 @@ pipeline {
       }
     }
     stage('Build and Test') {
+      environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Provide the ID of your Docker Hub credentials stored in Jenkins
+    }
       steps {
           container('docker-in-docker-maven') {
           sh 'ls -ltr'
